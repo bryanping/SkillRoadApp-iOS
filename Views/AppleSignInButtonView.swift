@@ -1,5 +1,6 @@
 import SwiftUI
 import AuthenticationServices
+import Foundation
 
 struct AppleSignInButtonView: View {
     var body: some View {

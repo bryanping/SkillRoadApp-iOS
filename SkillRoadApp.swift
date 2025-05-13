@@ -1,8 +1,13 @@
+ 
+ 
 import SwiftUI
-import FirebaseCore
+
 
 @main
 struct SkillRoadApp: App {
+       // 注册 AppDelegate
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     init() {
         FirebaseApp.configure()
     }

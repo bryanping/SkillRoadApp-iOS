@@ -19,13 +19,27 @@ struct SkillDetailView: View {
 
                 Text(skill.description)
 
-                Text("关联任务")
+                Text("学习资源")
                     .font(.title3)
                     .padding(.top)
 
-                ForEach(skill.relatedTasks, id: \.self) { task in
-                    Label(task, systemImage: "checkmark.seal")
+                if skill.resources.isEmpty {
+                    Text("暂无学习资源")
+                        .foregroundColor(.gray)
+                } else {
+                    ForEach(skill.resources) { resource in
+                        HStack {
+                            Image(systemName: "book")
+                            VStack(alignment: .leading) {
+                                Text(resource.title)
+                                    .fontWeight(.medium)
+                                Text(resource.type.rawValue)
+                                    .font(.caption)
+                                    .foregroundColor(.gray)
+                            }
+                        }
                         .padding(.vertical, 2)
+                    }
                 }
             }
             .padding()
