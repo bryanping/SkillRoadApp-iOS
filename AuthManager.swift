@@ -1,4 +1,5 @@
 import FirebaseAuth
+import FirebaseCore
 import SwiftUI
 
 class AuthManager: ObservableObject {

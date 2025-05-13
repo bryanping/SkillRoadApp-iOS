@@ -4,7 +4,7 @@
 //
 
 import UIKit
-import Firebase
+import FirebaseCore
 import GoogleSignIn
 
 class AppDelegate: UIResponder, UIApplicationDelegate {

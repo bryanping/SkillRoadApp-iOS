@@ -1,6 +1,7 @@
 import SwiftUI
 import AuthenticationServices
 import Foundation
+import FirebaseCore
 
 struct AppleSignInButtonView: View {
     var body: some View {

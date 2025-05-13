@@ -1,7 +1,6 @@
-import SwiftUI
-import Foundation
-import Combine
+// HomeView.swift
 
+import SwiftUI
 
 struct HomeView: View {
     @ObservedObject var dataManager = DataManager.shared
@@ -10,20 +9,20 @@ struct HomeView: View {
         NavigationView {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
-                    SectionTitle(title: "技能象限图")
-                    RoundedBox(text: "象限图 Placeholder", color: .teal)
-
-                    SectionTitle(title: "日历")
-                    RoundedBox(text: "日历简易显示", color: .blue)
-
-                    SectionTitle(title:"今日待办事项")
+                    SectionTitle(title: "技能象限圖")
+                    RoundedBox(text: "象限圖 Placeholder", color: .teal)
+                    
+                    SectionTitle(title: "日曆")
+                    RoundedBox(text: "日曆簡易顯示", color: .blue)
+                    
+                    SectionTitle(title: "今日待辦事項")
                     ForEach(1...3, id: \.self) { index in
                         TaskCard(index: index)
                     }
-
-                    SectionTitle(title:"技能进度")
+                    
+                    SectionTitle(title: "技能進度")
                     if dataManager.skills.isEmpty {
-                        Text("暂无技能，请添加技能...")
+                        Text("暫無技能，請添加技能...")
                             .foregroundColor(.gray)
                     } else {
                         ForEach(dataManager.skills) { skill in
@@ -64,8 +63,8 @@ struct TaskCard: View {
         HStack {
             Image(systemName: "checkmark.square")
             VStack(alignment: .leading) {
-                Text("任务 \(index)")
-                Text("任务详情...")
+                Text("任務 \(index)")
+                Text("任務詳情...")
                     .font(.subheadline)
                     .foregroundColor(.gray)
             }
@@ -83,7 +82,7 @@ struct SkillProgressView: View {
             Text(skill.name).fontWeight(.medium)
             ProgressView(value: skill.progress)
                 .accentColor(.teal)
-            Text("进度: \(Int(skill.progress * 100))%")
+            Text("進度: \(Int(skill.progress * 100))%")
                 .font(.caption)
                 .foregroundColor(.gray)
         }
@@ -94,14 +93,7 @@ struct SkillProgressView: View {
 #if DEBUG
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        let mockSkills = [
-            Skill(name: "Swift 基础", description: "学习 Swift 语言基础", category: .programming, level: .beginner, status: .inProgress, progress: 0.3, estimatedHours: 10, actualHours: 2),
-            Skill(name: "UI 设计", description: "掌握基本 UI 设计原则", category: .design, level: .intermediate, status: .notStarted, progress: 0.0, estimatedHours: 8, actualHours: 0),
-            Skill(name: "项目管理", description: "学习敏捷开发流程", category: .business, level: .advanced, status: .completed, progress: 1.0, estimatedHours: 12, actualHours: 12)
-        ]
-        let previewManager = DataManager.shared
-        previewManager.skills = mockSkills
-        return HomeView(dataManager: previewManager)
+        HomeView()
     }
 }
 #endif

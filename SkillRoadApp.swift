@@ -1,6 +1,7 @@
  
  
 import SwiftUI
+import FirebaseCore
 
 
 @main
