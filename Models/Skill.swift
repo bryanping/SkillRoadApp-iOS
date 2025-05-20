@@ -1,8 +1,7 @@
 import Foundation
-import Combine
 
 // 技能难度等级
-enum SkillLevel: String, Codable {
+enum SkillLevel: String, Codable, CaseIterable {
     case beginner = "初级"
     case intermediate = "中级"
     case advanced = "高级"
@@ -10,7 +9,7 @@ enum SkillLevel: String, Codable {
 }
 
 // 技能状态
-enum SkillStatus: String, Codable {
+enum SkillStatus: String, Codable, CaseIterable {
     case notStarted = "未开始"
     case inProgress = "进行中"
     case completed = "已完成"
@@ -18,7 +17,7 @@ enum SkillStatus: String, Codable {
 }
 
 // 技能分类
-enum SkillCategory: String, Codable {
+enum SkillCategory: String, Codable, CaseIterable {
     case programming = "编程"
     case design = "设计"
     case business = "商业"
@@ -27,94 +26,44 @@ enum SkillCategory: String, Codable {
 }
 
 struct Skill: Identifiable, Codable {
-    let id: UUID
-    var name: String
-    var description: String
-    var category: SkillCategory
-    var level: SkillLevel
-    var status: SkillStatus
-    var progress: Double // 0.0 到 1.0
-    var estimatedHours: Int
-    var actualHours: Int
-    var prerequisites: [UUID] // 前置技能ID
+    let id: String
+    let title: String
+    let description: String
+    let level: Int
     var resources: [Resource]
-    var createdAt: Date
-    var updatedAt: Date
-    var dueDate: Date?
-    var notes: String?
+    let createdAt: Date
     
-    // 子技能
-    var subSkills: [Skill]?
-    
-    init(
-        id: UUID = UUID(),
-        name: String,
-        description: String,
-        category: SkillCategory = .other,
-        level: SkillLevel = .beginner,
-        status: SkillStatus = .notStarted,
-        progress: Double = 0.0,
-        estimatedHours: Int = 0,
-        actualHours: Int = 0,
-        prerequisites: [UUID] = [],
-        resources: [Resource] = [],
-        createdAt: Date = Date(),
-        updatedAt: Date = Date(),
-        dueDate: Date? = nil,
-        notes: String? = nil,
-        subSkills: [Skill]? = nil
-    ) {
-        self.id = id
-        self.name = name
-        self.description = description
-        self.category = category
-        self.level = level
-        self.status = status
-        self.progress = progress
-        self.estimatedHours = estimatedHours
-        self.actualHours = actualHours
-        self.prerequisites = prerequisites
-        self.resources = resources
-        self.createdAt = createdAt
-        self.updatedAt = updatedAt
-        self.dueDate = dueDate
-        self.notes = notes
-        self.subSkills = subSkills
+    var formattedDate: String {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .short
+        return formatter.string(from: createdAt)
     }
-}
-
-// 学习资源模型
-struct Resource: Identifiable, Codable {
-    let id: UUID
-    var title: String
-    var type: ResourceType
-    var url: URL?
-    var description: String
-    var isCompleted: Bool
     
+    var levelDescription: String {
+        switch level {
+        case 1: return "入门"
+        case 2: return "基础"
+        case 3: return "进阶"
+        case 4: return "精通"
+        case 5: return "专家"
+        default: return "未知"
+        }
+    }
+
     init(
-        id: UUID = UUID(),
+        id: String,
         title: String,
-        type: ResourceType,
-        url: URL? = nil,
         description: String,
-        isCompleted: Bool = false
+        level: Int,
+        resources: [Resource],
+        createdAt: Date
     ) {
         self.id = id
         self.title = title
-        self.type = type
-        self.url = url
         self.description = description
-        self.isCompleted = isCompleted
+        self.level = level
+        self.resources = resources
+        self.createdAt = createdAt
     }
 }
-
-// 资源类型
-enum ResourceType: String, Codable {
-    case video = "视频"
-    case article = "文章"
-    case book = "书籍"
-    case course = "课程"
-    case project = "项目"
-    case other = "其他"
-} 

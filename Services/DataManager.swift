@@ -25,7 +25,7 @@ class DataManager: ObservableObject {
     }
     
     // MARK: - 数据加载
-    private func loadSkills() {
+    func loadSkills() {
         do {
             if fileManager.fileExists(atPath: dataFileURL.path) {
                 let data = try Data(contentsOf: dataFileURL)

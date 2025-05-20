@@ -1,33 +1,53 @@
+import Foundation
 import FirebaseAuth
-import FirebaseCore
-import SwiftUI
+import GoogleSignIn
 
+@MainActor
 class AuthManager: ObservableObject {
+    static let shared = AuthManager()
+    
     @Published var user: User?
-
-    init() {
-        self.user = Auth.auth().currentUser
-        Auth.auth().addStateDidChangeListener { _, user in
-            self.user = user
+    @Published var isAuthenticated = false
+    
+    private init() {
+        setupAuthStateListener()
+    }
+    
+    private func setupAuthStateListener() {
+        Auth.auth().addStateDidChangeListener { [weak self] _, user in
+            self?.user = user
+            self?.isAuthenticated = user != nil
         }
     }
-
-    func signInAnonymously() {
-        Auth.auth().signInAnonymously { result, error in
-            if let error = error {
-                print("❌ 匿名登入失敗: \(error.localizedDescription)")
-            } else {
-                print("✅ 匿名登入成功")
-            }
-        }
+    
+    func signInWithGoogle(credential: AuthCredential) async throws {
+        let result = try await Auth.auth().signIn(with: credential)
+        user = result.user
+        isAuthenticated = true
     }
-
-    func signOut() {
-        do {
-            try Auth.auth().signOut()
-            print("✅ 登出成功")
-        } catch {
-            print("❌ 登出失敗: \(error.localizedDescription)")
-        }
+    
+    func signInWithApple(idToken: String, nonce: String) async throws {
+        let credential = OAuthProvider.credential(
+            withProviderID: "apple.com",
+            idToken: idToken,
+            rawNonce: nonce
+        )
+        
+        let result = try await Auth.auth().signIn(with: credential)
+        user = result.user
+        isAuthenticated = true
+    }
+    
+    func signOut() throws {
+        try Auth.auth().signOut()
+        user = nil
+        isAuthenticated = false
+    }
+    
+    func deleteAccount() async throws {
+        guard let user = user else { return }
+        try await user.delete()
+        self.user = nil
+        isAuthenticated = false
     }
 }
