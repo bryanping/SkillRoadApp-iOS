@@ -22,24 +22,7 @@ class SkillViewModel: ObservableObject {
 
     func loadSampleSkills() {
         // 示例：新增一個預設技能
-        let sampleSkill = Skill(
-            title: "Swift 開發",
-            description: "學習 Swift 語言的基礎知識",
-           
-            level: .beginner,
-            status: .notStarted,
-           
-            estimatedHours: 10,
-            actualHours: 0,
-            prerequisites: [],
-            resources: [],
-            createdAt: Date(),
-            updatedAt: Date(),
-            dueDate: nil,
-            notes: nil,
-            subSkills: nil
-        )
-        skills.append(sampleSkill)
+
     }
 
     func saveSkill(_ skill: Skill) async throws {

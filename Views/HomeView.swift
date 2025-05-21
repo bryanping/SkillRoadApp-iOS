@@ -91,7 +91,7 @@ struct SkillProgressView: View {
     let skill: Skill
     var body: some View {
         VStack(alignment: .leading) {
-            Text(skill.name).fontWeight(.medium)
+            Text(skill.title).fontWeight(.medium)
             ProgressView(value: skill.progress)
                 .accentColor(.teal)
             Text("進度: \(Int(skill.progress * 100))%")

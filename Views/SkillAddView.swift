@@ -11,9 +11,8 @@ struct SkillAddView: View {
     @Environment(\.presentationMode) var presentationMode
     @ObservedObject var dataManager = DataManager.shared
 
-    @State private var name: String = ""
+    @State private var title: String = ""
     @State private var description: String = ""
-    @State private var category: SkillCategory = .other
     @State private var level: SkillLevel = .beginner
     @State private var progress: Double = 0.0
     @State private var estimatedHours: Int = 0
@@ -27,13 +26,6 @@ struct SkillAddView: View {
                 Section(header: Text("基本資料")) {
                     TextField("技能名稱", text: $name)
                     TextField("技能描述", text: $description)
-
-                    Picker("分類", selection: $category) {
-                        ForEach(SkillCategory.allCases, id: \.self) { c in
-                            Text(c.rawValue).tag(c)
-                        }
-                    }
-
                     Picker("難度", selection: $level) {
                         ForEach(SkillLevel.allCases, id: \.self) { l in
                             Text(l.rawValue).tag(l)
@@ -76,9 +68,8 @@ struct SkillAddView: View {
                 },
                 trailing: Button("儲存") {
                     let newSkill = Skill(
-                        name: name,
+                        title: title,
                         description: description,
-                        category: category,
                         level: level,
                         status: progress >= 1.0 ? .completed : .inProgress,
                         progress: progress,

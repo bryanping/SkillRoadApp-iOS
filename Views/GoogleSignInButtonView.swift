@@ -1,9 +1,9 @@
 // 完整 GoogleSignInButtonView.swift 修正版本
 
 import SwiftUI
-import GoogleSignIn
 import FirebaseCore
 import FirebaseAuth
+import GoogleSignIn
 
 struct GoogleSignInButtonView: View {
     @StateObject private var authManager = AuthManager.shared

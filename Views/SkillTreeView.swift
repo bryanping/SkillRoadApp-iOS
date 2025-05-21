@@ -4,8 +4,8 @@ import Foundation
 
 struct SkillTreeView: View {
     let skills: [Skill] = [
-        Skill(name: "Swift 基础", description: "掌握变量、控制流与函数", category: .programming, level: .beginner, status: .inProgress, progress: 0.6, estimatedHours: 8, actualHours: 2),
-        Skill(name: "UI 设计", description: "了解 SwiftUI 基本组件与布局", category: .design, level: .beginner, status: .inProgress, progress: 0.3, estimatedHours: 6, actualHours: 1)
+        Skill(title: "Swift 基础", description: "掌握变量、控制流与函数", category: .programming, level: .beginner, status: .inProgress, progress: 0.6, estimatedHours: 8, actualHours: 2),
+        Skill(title: "UI 设计", description: "了解 SwiftUI 基本组件与布局", category: .design, level: .beginner, status: .inProgress, progress: 0.3, estimatedHours: 6, actualHours: 1)
     ]
 
     var body: some View {
@@ -13,7 +13,7 @@ struct SkillTreeView: View {
             List(skills) { skill in
                 NavigationLink(destination: SkillDetailView(skill: skill)) {
                     VStack(alignment: .leading) {
-                        Text(skill.name).font(.headline)
+                        Text(skill.title).font(.headline)
                         ProgressView(value: skill.progress)
                             .accentColor(.blue)
                         Text(skill.description)
@@ -41,7 +41,7 @@ struct SkillEditView: View {
             Section(header: {
                 Text("基本信息")
             }) {
-                TextField("技能名称", text: $skill.name)
+                TextField("技能名称", text: $skill.title)
                 TextField("描述", text: $skill.description)
                 Picker("类别", selection: $skill.category) {
                     ForEach(SkillCategory.allCases, id: \.self) { cat in

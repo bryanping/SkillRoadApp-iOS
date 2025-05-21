@@ -10,7 +10,7 @@ struct SkillDetailView: View {
     var body: some View {
         Form {
             Section(header: Text("基本信息")) {
-                Text("名稱：\(skill.name)")
+                Text("名稱：\(skill.title)")
                 Text("描述：\(skill.description)")
                 Text("分類：\(skill.category.rawValue)")
                 Text("難度：\(skill.level.rawValue)")
