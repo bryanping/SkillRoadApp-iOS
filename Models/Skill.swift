@@ -6,6 +6,15 @@ enum SkillLevel: String, Codable, CaseIterable {
     case intermediate = "中级"
     case advanced = "高级"
     case expert = "专家"
+    
+    var level: Int {
+        switch self {
+        case .beginner: return 1
+        case .intermediate: return 2
+        case .advanced: return 3
+        case .expert: return 4
+        }
+    }
 }
 
 // 技能状态
@@ -29,7 +38,9 @@ struct Skill: Identifiable, Codable {
     let id: String
     let title: String
     let description: String
-    let level: Int
+    let level: SkillLevel
+    var status: SkillStatus
+    let category: SkillCategory
     var resources: [Resource]
     let createdAt: Date
     
@@ -41,28 +52,25 @@ struct Skill: Identifiable, Codable {
     }
     
     var levelDescription: String {
-        switch level {
-        case 1: return "入门"
-        case 2: return "基础"
-        case 3: return "进阶"
-        case 4: return "精通"
-        case 5: return "专家"
-        default: return "未知"
-        }
+        level.rawValue
     }
 
     init(
-        id: String,
+        id: String = UUID().uuidString,
         title: String,
         description: String,
-        level: Int,
-        resources: [Resource],
-        createdAt: Date
+        level: SkillLevel,
+        status: SkillStatus = .notStarted,
+        category: SkillCategory,
+        resources: [Resource] = [],
+        createdAt: Date = Date()
     ) {
         self.id = id
         self.title = title
         self.description = description
         self.level = level
+        self.status = status
+        self.category = category
         self.resources = resources
         self.createdAt = createdAt
     }
